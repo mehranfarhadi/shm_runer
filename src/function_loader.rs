@@ -13,11 +13,16 @@ pub struct FunctionHandle {
 pub fn load_external_function(data: &Function) -> Result<FunctionHandle, Box<dyn Error>> {
     // Create the library handle inside an Arc
     let lib = Arc::new(unsafe { Library::new(&data.path)? });
+
+    // Box the Arc<Library> to extend its lifetime
+    let lib_ref: &'static Library = Box::leak(Box::new(lib.clone()));
+
     // Extract the symbol from the library, ensuring the correct lifetime
-    let func: Symbol<'static, unsafe extern "C" fn() -> *mut libc::c_char> = {
-        let lib_ref: &Library = &*lib;
-        unsafe { lib_ref.get(data.name.as_bytes())? }
+    let func: Symbol<'static, unsafe extern "C" fn() -> *mut libc::c_char> = unsafe {
+        lib_ref.get(data.name.as_bytes())?
     };
+
+    // Return the FunctionHandle with the Arc<Library> and the symbol
     Ok(FunctionHandle { lib, func })
 }
 
