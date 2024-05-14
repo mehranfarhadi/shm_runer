@@ -17,3 +17,8 @@ pub struct Function {
     pub args: Vec<Argument>,
     pub outputs: Vec<String>,
 }
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct FunctionList {
+    pub functions: Vec<Function>,
+}

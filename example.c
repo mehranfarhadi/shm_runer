@@ -3,10 +3,13 @@
 
 // A simple function that returns a string
 const char* example_function() {
-    print();
     return "Hello from C!";
 }
 
-cont void print() {
-    printf("hello world!!!");
+const int subtract(int a, int b) {
+    return a - b;
+} 
+
+const int add(int a, int b) {
+    return a + b;
 }

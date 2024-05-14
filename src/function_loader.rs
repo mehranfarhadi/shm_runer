@@ -2,7 +2,7 @@ use libloading::{Library, Symbol};
 use std::ffi::CStr;
 use std::error::Error;
 use std::sync::Arc;
-use crate::types::Function;
+use crate::types::{Function};
 
 pub struct FunctionHandle {
     pub lib: Arc<Library>,

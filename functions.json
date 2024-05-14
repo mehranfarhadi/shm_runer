@@ -1,0 +1,54 @@
+{
+    "functions": [
+        {
+            "name": "example_function",
+            "path": "./libexample.so",
+            "function_type": "dynamic",
+            "documentation": "This is an example external function.",
+            "args": [],
+            "outputs": ["string"]
+        },
+        {
+            "name": "subtract",
+            "path": "./libexample.so",
+            "function_type": "dynamic",
+            "documentation": "This function subtracts two numbers.",
+            "args": [
+                {
+                    "name": "minuend",
+                    "data_type": "int",
+                    "default_value": null,
+                    "required": true
+                },
+                {
+                    "name": "subtrahend",
+                    "data_type": "int",
+                    "default_value": null,
+                    "required": true
+                }
+            ],
+            "outputs": ["int"]
+        },
+        {
+            "name": "add",
+            "path": "./libexample.so",
+            "function_type": "dynamic",
+            "documentation": "This function adds two numbers.",
+            "args": [
+                {
+                    "name": "addend1",
+                    "data_type": "int",
+                    "default_value": null,
+                    "required": true
+                },
+                {
+                    "name": "addend2",
+                    "data_type": "int",
+                    "default_value": null,
+                    "required": true
+                }
+            ],
+            "outputs": ["int"]
+        }
+    ]
+}
