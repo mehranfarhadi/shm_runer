@@ -5,6 +5,8 @@ mod types;
 
 use std::sync::Arc;
 use std::thread;
+use libc::printf;
+
 use crate::function_loader::{load_external_function, capture_function_result};
 use crate::types::Function;
 use crate::shared_memory::SafeShmem;
@@ -19,7 +21,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         outputs: vec!["string".to_string()],
     };
 
-    let shared_memory = SafeShmem::create("/my_shared_memory", 1024)?;
+    let shared_memory = SafeShmem::create("/test", 1024)?;
     let shared_memory = Arc::new(shared_memory);
     
     let mut handles = vec![];
@@ -33,6 +35,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 Ok(handle) => {
                     match capture_function_result(&handle) {
                         Ok(results) => {
+                            println!("hello");
                             shared_memory_clone.write(&serde_json::to_string(&results).unwrap()).unwrap();
                             let data = shared_memory_clone.read(1024).unwrap();
                             println!("Function output: {}", String::from_utf8_lossy(&data));
@@ -46,6 +49,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         
         handles.push(handle);
     }
+
 
     for handle in handles {
         handle.join().expect("Thread panicked");
